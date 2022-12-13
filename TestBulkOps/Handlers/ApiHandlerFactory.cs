@@ -17,10 +17,10 @@ namespace TestBulkOps.Handlers
                     return new CustomersHandler();
                 }
 
-                //if (fullName.EndsWith(".Order"))
-                //{
-                //    return new OrdersHandler();
-                //}
+                if (fullName.EndsWith(".Order"))
+                {
+                    return new OrdersHandler();
+                }
             }
 
             return null;

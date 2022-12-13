@@ -27,10 +27,9 @@ namespace TestBulkOps.Handlers
 
         public override ODataAPIResponseStatus TryGet(IDictionary<string, object> keyValues, out Order originalObject, out string errorMessage)
         {
-            throw new NotImplementedException();
-            //originalObject = null;
-            //errorMessage = "";
-            //return ODataAPIResponseStatus.NotFound;
+            originalObject = null;
+            errorMessage = "Some error";
+            return ODataAPIResponseStatus.Failure;
         }
     }
 }
