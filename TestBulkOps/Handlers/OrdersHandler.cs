@@ -17,7 +17,9 @@ namespace TestBulkOps.Handlers
 
         public override ODataAPIResponseStatus TryCreate(IDictionary<string, object> keyValues, out Order createdObject, out string errorMessage)
         {
-            throw new NotImplementedException();
+            createdObject = null;
+            errorMessage = "error";
+            return ODataAPIResponseStatus.Failure;
         }
 
         public override ODataAPIResponseStatus TryDelete(IDictionary<string, object> keyValues, out string errorMessage)
