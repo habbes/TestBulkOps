@@ -1,5 +1,7 @@
 ﻿using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestBulkOps.Models
 {
@@ -25,6 +27,7 @@ namespace TestBulkOps.Models
 
     public class Order
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Product Product { get; set; }
 

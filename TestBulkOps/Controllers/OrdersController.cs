@@ -17,6 +17,13 @@ namespace TestBulkOps
             return db.Orders;
         }
 
+        public Order Post(Order order)
+        {
+            db.Orders.Add(order);
+            db.SaveChanges();
+            return order;
+        }
+
         public DeltaSet<Order> Patch(DeltaSet<Order> deltaSet)
         {
             var result = deltaSet.Patch(null, new ApiHandlerFactory(this.HttpContext.Request.GetModel(), this.db));
