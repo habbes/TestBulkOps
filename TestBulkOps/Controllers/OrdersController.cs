@@ -7,19 +7,20 @@ namespace TestBulkOps
 {
     public class OrdersController: ODataController
     {
+        AppDbContext db;
+        public OrdersController(AppDbContext db)
+        {
+            this.db = db;
+        }
         public IQueryable<Order> Get()
         {
-            var orders =  new List<Order>
-            {
-                new Order { Id = 1, Count = 20 }
-            }.AsQueryable();
-
-            return orders;
+            return db.Orders;
         }
 
         public DeltaSet<Order> Patch(DeltaSet<Order> deltaSet)
         {
-            var result = deltaSet.Patch(null, new ApiHandlerFactory(this.HttpContext.Request.GetModel()));
+            var result = deltaSet.Patch(null, new ApiHandlerFactory(this.HttpContext.Request.GetModel(), this.db));
+            db.SaveChanges();
             return result;
         }
     }

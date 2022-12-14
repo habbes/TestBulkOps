@@ -5,7 +5,17 @@ namespace TestBulkOps.Handlers
 {
     public class CustomersHandler : ODataAPIHandler<Customer>
     {
+        AppDbContext db;
+        public CustomersHandler(AppDbContext db)
+        {
+            this.db = db;
+        }
         public override IODataAPIHandler GetNestedHandler(Customer parent, string navigationPropertyName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ODataAPIResponseStatus TryAddRelatedObject(Customer resource, out string errorMessage)
         {
             throw new NotImplementedException();
         }

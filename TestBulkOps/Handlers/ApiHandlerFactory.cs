@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
+using TestBulkOps.Models;
 
 namespace TestBulkOps.Handlers
 {
     public class ApiHandlerFactory : ODataAPIHandlerFactory
     {
-        public ApiHandlerFactory(IEdmModel model): base(model) { }
+        private AppDbContext db;
+        public ApiHandlerFactory(IEdmModel model, AppDbContext dbContext): base(model)
+        {
+            this.db = dbContext;
+        }
         public override IODataAPIHandler GetHandler(ODataPath odataPath)
         {
             if (odataPath.LastSegment.EdmType.AsElementType() is IEdmStructuredType structuredType)
@@ -14,12 +19,12 @@ namespace TestBulkOps.Handlers
                 string fullName = structuredType.FullTypeName();
                 if (fullName.EndsWith(".Customer"))
                 {
-                    return new CustomersHandler();
+                    return new CustomersHandler(this.db);
                 }
 
                 if (fullName.EndsWith(".Order"))
                 {
-                    return new OrdersHandler();
+                    return new OrdersHandler(this.db);
                 }
             }
 

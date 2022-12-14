@@ -10,6 +10,11 @@ namespace TestBulkOps.Handlers
             throw new NotImplementedException();
         }
 
+        public override ODataAPIResponseStatus TryAddRelatedObject(Manufacturer resource, out string errorMessage)
+        {
+            throw new NotImplementedException();
+        }
+
         public override ODataAPIResponseStatus TryCreate(IDictionary<string, object> keyValues, out Manufacturer createdObject, out string errorMessage)
         {
             throw new NotImplementedException();
