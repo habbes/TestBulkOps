@@ -25,6 +25,7 @@ namespace TestBulkOps.Handlers
             createdObject = new Customer();
             errorMessage = null;
             db.Customers.Add(createdObject);
+            db.SaveChanges();
             return ODataAPIResponseStatus.Success;
         }
 
