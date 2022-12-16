@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using TestBulkOps.Handlers;
 using TestBulkOps.Models;
 
@@ -17,7 +18,7 @@ namespace TestBulkOps
             return db.Orders;
         }
 
-        public Order Post(Order order)
+        public Order Post([FromBody] Order order)
         {
             db.Orders.Add(order);
             db.SaveChanges();

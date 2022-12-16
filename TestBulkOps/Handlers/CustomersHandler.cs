@@ -12,7 +12,7 @@ namespace TestBulkOps.Handlers
         }
         public override IODataAPIHandler GetNestedHandler(Customer parent, string navigationPropertyName)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public override ODataAPIResponseStatus TryAddRelatedObject(Customer resource, out string errorMessage)
@@ -22,17 +22,44 @@ namespace TestBulkOps.Handlers
 
         public override ODataAPIResponseStatus TryCreate(IDictionary<string, object> keyValues, out Customer createdObject, out string errorMessage)
         {
-            throw new NotImplementedException();
+            createdObject = new Customer();
+            errorMessage = null;
+            db.Customers.Add(createdObject);
+            return ODataAPIResponseStatus.Success;
         }
 
         public override ODataAPIResponseStatus TryDelete(IDictionary<string, object> keyValues, out string errorMessage)
         {
-            throw new NotImplementedException();
+            var customer = db.Customers.Find(keyValues["Id"]);
+            errorMessage = null;
+            if (customer == null)
+            {
+                return ODataAPIResponseStatus.NotFound;
+            }
+
+            db.Customers.Remove(customer);
+            return ODataAPIResponseStatus.Success;
         }
 
         public override ODataAPIResponseStatus TryGet(IDictionary<string, object> keyValues, out Customer originalObject, out string errorMessage)
         {
-            throw new NotImplementedException();
+            try {
+                originalObject = keyValues["Id"] == "Null" ? null : db.Customers.Find(keyValues["Id"]);
+                errorMessage = null;
+
+                if (originalObject == null)
+                {
+                    return ODataAPIResponseStatus.NotFound;
+                }
+
+                return ODataAPIResponseStatus.Success;
+            }
+            catch (Exception ex)
+            {
+                originalObject = null;
+                errorMessage = ex.Message;
+                return ODataAPIResponseStatus.Failure;
+            }
         }
     }
 }

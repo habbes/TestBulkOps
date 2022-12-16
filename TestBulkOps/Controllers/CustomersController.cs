@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using TestBulkOps.Handlers;
 using TestBulkOps.Models;
 
 namespace TestBulkOps.Controllers
@@ -12,9 +16,11 @@ namespace TestBulkOps.Controllers
             this.db = db; 
         }
 
-        public Customer Post(Customer customer)
+        [HttpPost]
+        public Customer Post([FromBody] Customer customer)
         {
             db.Customers.Add(customer);
+            db.SaveChanges();
             return customer;
         }
 
@@ -28,6 +34,13 @@ namespace TestBulkOps.Controllers
         public IQueryable<Customer> Get()
         {
             return db.Customers;
+        }
+
+        public DeltaSet<Customer> Patch(DeltaSet<Customer> deltaSet)
+        {
+            var result = deltaSet.Patch(null, new ApiHandlerFactory(this.HttpContext.Request.GetModel(), this.db));
+            db.SaveChanges();
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
 using TestBulkOps.Models;
 
 namespace TestBulkOps.Controllers
@@ -12,9 +13,10 @@ namespace TestBulkOps.Controllers
             this.db = db;
         }
 
-        public Product Post(Product product)
+        public Product Post([FromBody] Product product)
         {
             db.Products.Add(product);
+            db.SaveChanges();
             return product;
         }
 
